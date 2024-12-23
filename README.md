@@ -114,13 +114,26 @@ To ensure proper synchronization and avoid race conditions, the following FreeRT
 - **Semaphores:** Used to synchronize the tasks. For example, a semaphore is used to signal the Conversion Task when the Green LED Task toggles the green LED after a button press.
 - **Mutexes:** Protect shared resources. The LCD Task uses a mutex to safely access the LCD in case of an emergency.
 
+### Testing and Results
 
+Here are some images showing the actual results of running the system:
+#### When value>4000 
+<img src="images/462572055_1265753021363044_6935220312428217992_n.jpg" width="500" height="500"/>
+When value>2500
+<img src="images/462575429_459759130252572_5608429541788743906_n.jpg" width="500" height="500"/>
+When value>1500
+<img src="images/462577350_1299880241051715_6756055438476293060_n.jpg" width="500" height="500"/>
+When value<1500
+<img src="images/462578078_964087785614912_3445390232303363261_n.jpg" width="500" height="500"/>
 
+## Conclusion
 
+This project serves as a practical demonstration of FreeRTOS on an STM32 microcontroller, highlighting how multitasking and synchronization primitives can be used to create an efficient, real-time embedded system.
 
+I hope this project provides a helpful foundation for anyone looking to work with FreeRTOS and STM32 in embedded systems development. If you're interested in learning more, feel free to explore the provided resources or check out the official [FreeRTOS documentation](https://www.freertos.org/).
 
-
-
+## License
+This project is licensed under the MIT License.
 
 
 
