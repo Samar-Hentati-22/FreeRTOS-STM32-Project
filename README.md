@@ -75,13 +75,44 @@ We can either:
 ## Helpful Resources
 If you're new to FreeRTOS, I recommend checking out this excellent [YouTube series on FreeRTOS fundamentals](<https://www.youtube.com/playlist?list=PLEBQazB0HUyQ4hAPU1cJED6t3DU0h34bz>). It provides a clear and comprehensive introduction to the concepts I talked about.
 
-### Implementation Details  
+## Implementation Details  
 Below, you'll find the specific implementation of this project, demonstrating how the features and concepts explained above were realized using FreeRTOS and the STM32 platform.
 
+## Project Overview
 
+This project demonstrates the use of FreeRTOS on an STM32 microcontroller to design an embedded system with several tasks working together to manage data acquisition using ADC, LED control, and an LCD display via I2C. The objective is to showcase the usage of threads, message queues, semaphores, and mutexes in a real-time embedded system.
 
+## System Architecture
 
+-**Microcontroller**:**STM32F407VGT6**:
+- **4 LEDs**: Connected to pins PD12, PD13, PD14, PD15 for indicating the system state.
+- **Push button**: Connected to PA0 to simulate an external interrupt.
+- **Analog sensor**: Connected to the ADC channel for data acquisition.
+- **LCD**: Connected via I2C to display system data.
+- **Emergency push button**: Connected to PA2 to trigger an urgent state.
 
+## Task Breakdown
+
+This system was designed to have 6 tasks running concurrently, with each task focusing on a specific functionality. The tasks are synchronized using FreeRTOS primitives like message queues, semaphores, and mutexes.
+
+1. **Blue LED Task**: Toggles the blue LED every 500ms.
+2. **Green LED Task**: Responds to the push button on PA0. It toggles the green LED and displays a message on the LCD on the first button press. It uses a semaphore to synchronize with the ADC task.
+3. **Conversion Task**: Reads the potentiometer value using the ADC and sends the value to both the LED control task and the LCD task via message queues.
+4. **LED Control Task**: Controls the orange and red LEDs based on the potentiometer value:
+   - If value > 4000: Both LEDs on
+   - If value > 2500: Orange LED off, Red LED on
+   - If value > 1500: Orange LED on, Red LED off
+   - If value < 1500: Both LEDs off
+5. **LCD Task**: Displays the potentiometer value on the LCD. Uses a mutex to ensure exclusive access to the LCD for concurrent tasks.
+6. **Emergency Task**: Detects a press of the PA2 button. When pressed, it displays "Urgence" on the LCD and holds the display until the button is released.
+
+## Synchronization Primitives
+
+To ensure proper synchronization and avoid race conditions, the following FreeRTOS primitives are used:
+
+- **Message Queues:** Used to send data between tasks (ADC values for LED control and LCD display).
+- **Semaphores:** Used to synchronize the tasks. For example, a semaphore is used to signal the Conversion Task when the Green LED Task toggles the green LED after a button press.
+- **Mutexes:** Protect shared resources. The LCD Task uses a mutex to safely access the LCD in case of an emergency.
 
 
 
