@@ -1,4 +1,6 @@
-# FreeRTOS-STM32-Project 
+# FreeRTOS-Based Real-Time Embedded System on STM32
+This project demonstrates how to use FreeRTOS on an STM32 microcontroller to create a real-time embedded system. The system reads data from sensors, manages LED indicators, and displays information on an LCD using multitasking and synchronization features provided by FreeRTOS.
+
 This project was developed as part of a FreeRTOS workshop, where I learned the fundamentals of real-time operating systems and applied them to create a complete STM32-based application.
 ## What I learned
 These are the key concepts to know about the fundamentals of real-time operating systems(RTOS): 
